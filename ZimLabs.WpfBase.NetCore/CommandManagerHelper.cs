@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ZimLabs.WpfBase
+namespace ZimLabs.WpfBase.NetCore
 {
     /// <summary>
     /// This class contains methods for the CommandManager that help avoid memory leaks by using weak references.
@@ -12,10 +12,9 @@ namespace ZimLabs.WpfBase
         /// Calls the weak reference handlers.
         /// </summary>
         /// <param name="handlers">The handlers.</param>
-        public static void CallWeakReferenceHandlers(List<WeakReference>? handlers)
+        public static void CallWeakReferenceHandlers(List<WeakReference> handlers)
         {
-            if (handlers == null) 
-                return;
+            if (handlers == null) return;
 
             var callees = new EventHandler[handlers.Count];
             var count = 0;
@@ -23,8 +22,9 @@ namespace ZimLabs.WpfBase
             for (var i = handlers.Count - 1; i >= 0; i--)
             {
                 var reference = handlers[i];
+                var handler = reference.Target as EventHandler;
 
-                if (reference.Target is not EventHandler handler)
+                if (handler == null)
                 {
                     handlers.RemoveAt(i);
                 }
@@ -47,7 +47,7 @@ namespace ZimLabs.WpfBase
         /// </summary>
         /// <param name="handlers">The handlers.</param>
         /// <param name="handler">The handler.</param>
-        public static void AddWeakReferenceHandler(ref List<WeakReference>? handlers, EventHandler handler)
+        public static void AddWeakReferenceHandler(ref List<WeakReference> handlers, EventHandler handler)
         {
             handlers ??= new List<WeakReference>();
 
@@ -59,16 +59,16 @@ namespace ZimLabs.WpfBase
         /// </summary>
         /// <param name="handlers">The handlers.</param>
         /// <param name="handler">The handler.</param>
-        public static void RemoveWeakReferenceHandler(List<WeakReference>? handlers, EventHandler handler)
+        public static void RemoveWeakReferenceHandler(List<WeakReference> handlers, EventHandler handler)
         {
-            if (handlers == null) 
-                return;
+            if (handlers == null) return;
 
             for (var i = handlers.Count - 1; i >= 0; i--)
             {
                 var reference = handlers[i];
+                var existingHandler = reference.Target as EventHandler;
 
-                if (reference.Target is not EventHandler existingHandler || existingHandler == handler)
+                if (existingHandler == null || existingHandler == handler)
                     handlers.RemoveAt(i);
             }
         }

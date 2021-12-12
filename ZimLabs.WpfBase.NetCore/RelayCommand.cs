@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace ZimLabs.WpfBase
+namespace ZimLabs.WpfBase.NetCore
 {
     /// <inheritdoc />
     /// <summary>
@@ -12,22 +12,12 @@ namespace ZimLabs.WpfBase
         private readonly Action<T> _action;
         private readonly Predicate<T> _canExecute;
 
-        /// <inheritdoc />
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:WpfUtility.Services.RelayCommand`1" /> class.
-        /// </summary>
-        /// <param name="action">The execute method.</param>
-        public RelayCommand(Action<T> action)
-            : this(action, null)
-        {
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="RelayCommand{T}" /> class.
         /// </summary>
         /// <param name="action">The execute method.</param>
         /// <param name="canExecute">The can execute method.</param>
-        public RelayCommand(Action<T> action, Predicate<T> canExecute)
+        public RelayCommand(Action<T> action, Predicate<T> canExecute = null)
         {
             _action = action ?? throw new ArgumentNullException(nameof(action));
             _canExecute = canExecute;

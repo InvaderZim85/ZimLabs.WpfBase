@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace ZimLabs.WpfBase
+namespace ZimLabs.WpfBase.NetCore
 {
     /// <summary>
     /// This class allows simpler handling of the INotifyPropertyChanged
@@ -33,13 +34,13 @@ namespace ZimLabs.WpfBase
 
         /// <summary>
         /// </summary>
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// Raises the OnPropertyChanged event
         /// </summary>
         /// <param name="propertyName">Name of the property (if none is given CallerMemberName will be used)</param>
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -64,7 +65,7 @@ namespace ZimLabs.WpfBase
         /// <param name="value">Value which will be set to the field</param>
         /// <param name="propertyName">Name of the property (if none is given CallerMemberName will be used)</param>
         /// <returns>True if the value has changed or false if it is equal</returns>
-        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(field, value)) return false;
             field = value;
@@ -84,7 +85,7 @@ namespace ZimLabs.WpfBase
         /// <param name="propertyName">Name of the property (if none is given CallerMemberName will be used)</param>
         /// <returns>True if the value has changed or false if it is equal</returns>
         protected bool SetField<T>(ref T parent, string property, object value,
-            [CallerMemberName] string? propertyName = null)
+            [CallerMemberName] string propertyName = null)
         {
             if (parent == null)
                 return false;
@@ -117,7 +118,7 @@ namespace ZimLabs.WpfBase
             if (!GetType().IsClass)
                 return new List<string>();
 
-            var properties = (int)accessType switch
+            List<PropertyInfo> properties = (int)accessType switch
             {
                 1 => GetType().GetProperties().Where(w => w.CanRead).ToList(),
                 2 => GetType().GetProperties().Where(w => w.CanWrite).ToList(),

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Input;
 
-namespace ZimLabs.WpfBase
+namespace ZimLabs.WpfBase.NetCore
 {
     /// <summary>
     /// This class allows delegating the commanding logic to methods passed as parameters,
@@ -11,8 +11,8 @@ namespace ZimLabs.WpfBase
     public class DelegateCommand : ICommand
     {
         private readonly Action _action;
-        private readonly Func<bool>? _canExecute;
-        private List<WeakReference>? _canExecuteChangedHandlers;
+        private readonly Func<bool> _canExecute;
+        private List<WeakReference> _canExecuteChangedHandlers;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DelegateCommand" /> class.
@@ -36,7 +36,7 @@ namespace ZimLabs.WpfBase
         /// <summary>
         /// Occurs when changes occur that affect whether or not the command should execute.
         /// </summary>
-        public event EventHandler? CanExecuteChanged
+        public event EventHandler CanExecuteChanged
         {
             add => CommandManagerHelper.AddWeakReferenceHandler(ref _canExecuteChangedHandlers, value);
             remove => CommandManagerHelper.RemoveWeakReferenceHandler(_canExecuteChangedHandlers, value);
