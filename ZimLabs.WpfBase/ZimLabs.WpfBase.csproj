@@ -7,6 +7,16 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageIcon>Logo.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/InvaderZim85/ZimLabs.WpfBase</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>mvvm, wpf, helper</PackageTags>
+    <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <Copyright>Andreas Pouwels</Copyright>
+    <PackageProjectUrl>https://github.com/InvaderZim85/ZimLabs.WpfBase</PackageProjectUrl>
+    <Authors>Andreas Pouwels</Authors>
+    <Description>Class library for the easy use of mvvm within wpf projects</Description>
   </PropertyGroup>
 
   <ItemGroup>
