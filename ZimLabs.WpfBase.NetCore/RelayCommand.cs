@@ -9,15 +9,15 @@ namespace ZimLabs.WpfBase.NetCore
     /// <typeparam name="T"></typeparam>
     public class RelayCommand<T> : ICommand
     {
-        private readonly Action<T> _action;
-        private readonly Predicate<T> _canExecute;
+        private readonly Action<T>? _action;
+        private readonly Predicate<T>? _canExecute;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RelayCommand{T}" /> class.
         /// </summary>
         /// <param name="action">The execute method.</param>
         /// <param name="canExecute">The can execute method.</param>
-        public RelayCommand(Action<T> action, Predicate<T> canExecute = null)
+        public RelayCommand(Action<T>? action, Predicate<T>? canExecute = null)
         {
             _action = action ?? throw new ArgumentNullException(nameof(action));
             _canExecute = canExecute;
@@ -31,15 +31,18 @@ namespace ZimLabs.WpfBase.NetCore
         /// be set to null.
         /// </param>
         /// <returns><c>true</c> if this command can be executed; otherwise, <c>false</c>.</returns>
-        public bool CanExecute(object parameter)
+        public bool CanExecute(object? parameter)
         {
-            return _canExecute?.Invoke((T)parameter) ?? true;
+            if (parameter is T tmpValue)
+                return _canExecute?.Invoke(tmpValue) ?? false;
+
+            return false;
         }
 
         /// <summary>
         /// Occurs when changes occur that affect whether or not the command should action.
         /// </summary>
-        public event EventHandler CanExecuteChanged
+        public event EventHandler? CanExecuteChanged
         {
             add => CommandManager.RequerySuggested += value;
             remove => CommandManager.RequerySuggested -= value;
@@ -49,9 +52,10 @@ namespace ZimLabs.WpfBase.NetCore
         /// Executes the action
         /// </summary>
         /// <param name="parameter"></param>
-        public void Execute(object parameter)
+        public void Execute(object? parameter)
         {
-            _action((T)parameter);
+            if (parameter is T tmpValue)
+                _action?.Invoke(tmpValue);
         }
     }
 }

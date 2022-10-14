@@ -34,13 +34,13 @@ namespace ZimLabs.WpfBase.NetCore
 
         /// <summary>
         /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
         /// Raises the OnPropertyChanged event
         /// </summary>
         /// <param name="propertyName">Name of the property (if none is given CallerMemberName will be used)</param>
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -65,7 +65,7 @@ namespace ZimLabs.WpfBase.NetCore
         /// <param name="value">Value which will be set to the field</param>
         /// <param name="propertyName">Name of the property (if none is given CallerMemberName will be used)</param>
         /// <returns>True if the value has changed or false if it is equal</returns>
-        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = "")
         {
             if (EqualityComparer<T>.Default.Equals(field, value)) return false;
             field = value;
@@ -85,7 +85,7 @@ namespace ZimLabs.WpfBase.NetCore
         /// <param name="propertyName">Name of the property (if none is given CallerMemberName will be used)</param>
         /// <returns>True if the value has changed or false if it is equal</returns>
         protected bool SetField<T>(ref T parent, string property, object value,
-            [CallerMemberName] string propertyName = null)
+            [CallerMemberName] string propertyName = "")
         {
             if (parent == null)
                 return false;

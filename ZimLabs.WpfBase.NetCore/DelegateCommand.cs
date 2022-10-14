@@ -10,24 +10,22 @@ namespace ZimLabs.WpfBase.NetCore
     /// </summary>
     public class DelegateCommand : ICommand
     {
-        private readonly Action _action;
-        private readonly Func<bool> _canExecute;
-        private List<WeakReference> _canExecuteChangedHandlers;
+        private readonly Action? _action;
+        private readonly Func<bool>? _canExecute;
+        private List<WeakReference> _canExecuteChangedHandlers = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DelegateCommand" /> class.
         /// </summary>
         /// <param name="executeMethod">The execute method.</param>
-        public DelegateCommand(Action executeMethod) : this(executeMethod, null)
-        {
-        }
+        public DelegateCommand(Action executeMethod) : this(executeMethod, null) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DelegateCommand" /> class.
         /// </summary>
         /// <param name="executeMethod">The execute method.</param>
         /// <param name="canExecuteMethod">The can execute method.</param>
-        public DelegateCommand(Action executeMethod, Func<bool> canExecuteMethod)
+        public DelegateCommand(Action executeMethod, Func<bool>? canExecuteMethod)
         {
             _action = executeMethod ?? throw new ArgumentNullException(nameof(executeMethod));
             _canExecute = canExecuteMethod;
@@ -36,10 +34,18 @@ namespace ZimLabs.WpfBase.NetCore
         /// <summary>
         /// Occurs when changes occur that affect whether or not the command should execute.
         /// </summary>
-        public event EventHandler CanExecuteChanged
+        public event EventHandler? CanExecuteChanged
         {
-            add => CommandManagerHelper.AddWeakReferenceHandler(ref _canExecuteChangedHandlers, value);
-            remove => CommandManagerHelper.RemoveWeakReferenceHandler(_canExecuteChangedHandlers, value);
+            add
+            {
+                if (value != null)
+                    CommandManagerHelper.AddWeakReferenceHandler(ref _canExecuteChangedHandlers, value);
+            }
+            remove
+            {
+                if (value != null)
+                    CommandManagerHelper.RemoveWeakReferenceHandler(_canExecuteChangedHandlers, value);
+            }
         }
 
         /// <summary>
@@ -50,7 +56,7 @@ namespace ZimLabs.WpfBase.NetCore
         /// be set to null.
         /// </param>
         /// <returns><c>true</c> if this command can be executed; otherwise, <c>false</c>.</returns>
-        bool ICommand.CanExecute(object parameter)
+        bool ICommand.CanExecute(object? parameter)
         {
             return CanExecute();
         }
@@ -62,18 +68,9 @@ namespace ZimLabs.WpfBase.NetCore
         /// Data used by the command.  If the command does not require data to be passed, this object can
         /// be set to null.
         /// </param>
-        void ICommand.Execute(object parameter)
+        void ICommand.Execute(object? parameter)
         {
             Execute();
-        }
-
-        /// <summary>
-        /// Executes the action
-        /// </summary>
-        /// <param name="parameter"></param>
-        public void Execute(object parameter)
-        {
-            _action();
         }
 
         /// <summary>
@@ -94,7 +91,7 @@ namespace ZimLabs.WpfBase.NetCore
         }
 
         /// <summary>
-        /// Raises the CanExecuteChaged event
+        /// Raises the CanExecuteChanged event
         /// </summary>
         public void RaiseCanExecuteChanged()
         {
