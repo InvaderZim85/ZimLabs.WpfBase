@@ -34,7 +34,7 @@ namespace ZimLabs.WpfBase.NetCore
         public bool CanExecute(object? parameter)
         {
             if (parameter is T tmpValue)
-                return _canExecute?.Invoke(tmpValue) ?? false;
+                return _canExecute?.Invoke(tmpValue) ?? true;
 
             return false;
         }

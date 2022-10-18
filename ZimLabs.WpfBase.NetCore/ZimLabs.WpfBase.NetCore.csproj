@@ -10,16 +10,16 @@
     <RepositoryUrl>https://github.com/InvaderZim85/ZimLabs.WpfBase.NetCore</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>mvvm, wpf, helper</PackageTags>
-    <PackageReleaseNotes>Changed the .NET from 5 to 6 because .NET 5 is not longer supported by Microsoft</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed a bug which causes the RelayCommand to disable a button (wrong return value)</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <Copyright>Andreas Pouwels</Copyright>
     <PackageProjectUrl>https://github.com/InvaderZim85/ZimLabs.WpfBase.NetCore</PackageProjectUrl>
     <Authors>Andreas Pouwels</Authors>
     <Description>Class library for the easy use of mvvm within wpf projects</Description>
-    <FileVersion>2.0.0</FileVersion>
-    <AssemblyVersion>2.0.0</AssemblyVersion>
-    <Version>2.0.0</Version>
+    <FileVersion>2.1.0</FileVersion>
+    <AssemblyVersion>2.1.0</AssemblyVersion>
+    <Version>2.1.0</Version>
     <Title>ZimLabs.WpfBase.NetCore</Title>
   </PropertyGroup>
 

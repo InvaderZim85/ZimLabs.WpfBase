@@ -3,6 +3,8 @@
 
 ## Changelog
 
+- v2.1.0 (Bugfix)
+    - Fixed a bug which causes the RelayCommand to disable a button (wrong return value `false` instead of `true`)
 - v2.0.0 (Breaking Change)
     - Changed the .NET from 5 to 6 because .NET 5 is not longer supported by Microsoft
     - Updated the class so that they are *nullable* (`nullable` parameter is set to `true`)
