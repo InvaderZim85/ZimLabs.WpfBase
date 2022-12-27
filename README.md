@@ -1,3 +1,9 @@
+# ❗❗❗ IMPORTANT ❗❗❗
+
+I will not continue this project, because there is a similar project from Microsoft (Microsoft.Toolkit). The MS project offers the same (if not more) functionality. Therefore, from my point of view, it is no longer worthwhile to continue this project.
+
+For more information see here [.NET Community Toolkit](https://github.com/CommunityToolkit/dotnet) or here [nuget - CommunityToolki.Mvvm](https://www.nuget.org/packages/CommunityToolkit.Mvvm/)
+
 # ZimLabs.WpfBase.NetCore
  Class library for the ease use of MVVM in WPF applications
 
